@@ -472,6 +472,10 @@ input {
         padding: 7px;
     }
 
+    footer {
+        font-size: 1em;
+    }
+
     footer button {
         width: 50%;
     }
