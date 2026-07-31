@@ -42,6 +42,8 @@ var obsX = [ 100, 100, 100, 100, 100, 100, 100, 100, 100 ];
 var score = 0;
 var quizqn;
 
+var screenwidth = window.screen.width;
+
 // ===== BGM ===== //
 
 // Synthwave Retro 80s by DELOSound on Pixabay
@@ -204,10 +206,20 @@ var lastchosen;
 
 function spawnObs()
 {
-    var speed = [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ];
+    var speed = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+
     var posY = 0;
     var chosenObs;
     var obstype;
+
+    let minRunnerPos = 12;
+    let maxRunnerPos = 20;
+
+    if (screenwidth < 800)
+        {
+            var speed = [3, 3, 3, 3, 3, 3, 3, 3, 3];
+            let maxRunnerPos = 50;
+        }
 
     chosenObs = (Math.floor(Math.random() * 8) + 1);
 
@@ -241,7 +253,7 @@ function spawnObs()
                 obsX[chosenObs] -= speed[chosenObs];
                 obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
 
-                if (obsX[chosenObs] > 12 && obsX[chosenObs] < 20 && jumping == false)
+                if (obsX[chosenObs] > minRunnerPos && obsX[chosenObs] < maxRunnerPos && jumping == false)
                 {
                     if (poweredUp == true)
                     {
@@ -289,7 +301,7 @@ function spawnObs()
                     obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
                 }
 
-                if (obsX[chosenObs] > 12 && obsX[chosenObs] < 20 && sliding == false)
+                if (obsX[chosenObs] > minRunnerPos && obsX[chosenObs] < maxRunnerPos && sliding == false)
                 {
                     if (obstacles[chosenObs].id == "powerup")
                     {
