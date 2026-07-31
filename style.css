@@ -442,6 +442,10 @@ input {
         font-size: 1em;
     }
 
+    .article {
+        padding: 7px;
+    }
+
     #slidebtn, #jumpbtn {
         display: block;
     }
@@ -525,6 +529,11 @@ input {
 
     .img-n-text:hover p {
         opacity: 100%;
+    }
+
+    #game-window
+    {
+        width: 100%;
     }
 
 
