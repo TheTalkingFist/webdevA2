@@ -30,6 +30,12 @@ p {
     text-shadow: 3px 3px #000000;
 }
 
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 footer, footer p{
     text-align: center;
     font-size: 1.25em;
@@ -38,6 +44,10 @@ footer, footer p{
 }
 
 footer button {
+    width: 20%;
+}
+
+footer img {
     width: 20%;
 }
 
@@ -464,6 +474,10 @@ input {
 
     footer button {
         width: 50%;
+    }
+
+    footer img {
+        display: none;
     }
 
     /* Navigation */
