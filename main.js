@@ -391,7 +391,10 @@ function die()
         obstacles[x].style.display = "none";
     }
 
-    scoreh2.innerHTML = "<h2>You died! Score: " + score + "<h2>";
+    jumpbtn.style.display = "none";
+    slide.style.display = "none";
+
+    scoreh2.innerHTML = "<h2>You died! Score: " + score + ", screen width: " + screenwidth + "<h2>";
 }
 
 startbtn.addEventListener("click", function()
