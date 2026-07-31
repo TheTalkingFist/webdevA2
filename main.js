@@ -43,6 +43,9 @@ var score = 0;
 var quizqn;
 
 var screenwidth = window.screen.width;
+const screensizetext = document.querySelector("#screensizetext");
+
+screensizetext.innerHTML = "Screen Size: " + screenwidth;
 
 // ===== BGM ===== //
 
@@ -394,7 +397,7 @@ function die()
     jumpbtn.style.display = "none";
     slide.style.display = "none";
 
-    scoreh2.innerHTML = "<h2>You died! Score: " + score + ", screen width: " + screenwidth + "<h2>";
+    scoreh2.innerHTML = "<h2>You died! Score: " + score + "<h2>";
 }
 
 startbtn.addEventListener("click", function()
