@@ -139,7 +139,15 @@ function submitQuiz()
         }
     }
 
-    shadingDisplay.style.display = "grid";
+    if (screenwidth < 800)
+    {
+        shadingDisplay.style.display = "flex";
+    }
+    else
+    {
+        shadingDisplay.style.display = "grid";
+    }
+
     quizbody.style.display = "none";
 
     quizprompt.style.display = "none";
