@@ -3,6 +3,8 @@
     src: url("fonts/VCR.ttf");
 }
 
+/* ===== General ===== */
+
 h1, h2, h3, p, body {
     font-family: VCR;
     color: white;
@@ -28,9 +30,18 @@ p {
     text-shadow: 3px 3px #000000;
 }
 
-footer{
+footer, footer p{
     text-align: center;
+    font-size: 1.25em;
+    color: black;
+    text-shadow: none;
 }
+
+footer button {
+    width: 20%;
+}
+
+/* ===== Navigation ===== */
 
 #hamburger {
     display: none;
@@ -106,6 +117,8 @@ button {
 #home-main * {
     text-align: center;
 }
+
+/* ===== Articles ===== */
 
 .article {
     padding: 30px;
@@ -229,6 +242,8 @@ button {
     width: 50%;
     margin: auto;
 }
+
+/* ===== Quiz ===== */
 
 #shading1 {
 	background: url('images/shading-sheet.png') no-repeat -8px -8px;
@@ -422,6 +437,7 @@ input {
 
 @media (max-width: 800px)
 {
+    /* General */
     h1 {
         font-size: 2.5em;
     }
@@ -446,10 +462,7 @@ input {
         padding: 7px;
     }
 
-    #slidebtn, #jumpbtn {
-        display: block;
-    }
-
+    /* Navigation */
 
     #burgerbtn {
         display: block;
@@ -475,6 +488,8 @@ input {
         padding: 5px;
         font-size: 20px;
     }
+
+    /* Article Elements */
 
     .text--img img {
         width: 100%;
@@ -531,9 +546,15 @@ input {
         opacity: 100%;
     }
 
+    /* Minigame */
+
     #game-window
     {
         width: 100%;
+    }
+
+    #slidebtn, #jumpbtn {
+        display: block;
     }
 
 

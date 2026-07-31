@@ -1,8 +1,6 @@
 /* jshint esversion: 6 */
 
 const nav = document.querySelector("nav");
-const navli = document.querySelector("#navli");
-const litem = document.querySelectorAll(".articlebtn");
 const burgerbtn = document.querySelector("#burgerbtn");
 
 var menuDisplay = false;
@@ -18,6 +16,7 @@ const quizbody = document.querySelector("#article2 #quiz-body");
 const quizform = document.querySelectorAll(".quiz-fieldset");
 const quizbtn = document.querySelector("#quiz-start");
 const submitbtn = document.querySelector("#submit");
+const quizprompt = document.querySelector("#quiz-prompt");
 
 const scoreh2 = document.querySelector("#score");
 const gamebtn = document.querySelector("#gamebtn");
@@ -40,21 +39,33 @@ var poweredUp = false;
 var obsX = [ 100, 100, 100, 100, 100, 100, 100, 100, 100 ];
 
 var score = 0;
-var quizqn;
 
 var screenwidth = window.screen.width;
 const screensizetext = document.querySelector("#screensizetext");
 
 screensizetext.innerHTML = "Screen Size: " + screenwidth;
 
+const refreshbtn = document.querySelector("#refreshbtn");
+
 // ===== BGM ===== //
 
 // Synthwave Retro 80s by DELOSound on Pixabay
 const bgm = new Audio("audio/DelosoundSynthwaveRetro.mp3");
 bgm.loop = true;
-bgm.volume = 0.6;
+bgm.volume = 0.15;
+
+const jumpsfx = new Audio("audio/jump.wav");
+const slidesfx = new Audio("audio/slide.wav");
+const powerupsfx = new Audio("audio/powerup.wav");
+const powerdownsfx = new Audio("audio/powerdown.wav");
+const diesfx = new Audio("audio/explosion.wav");
 
 bgm.play();
+
+refreshbtn.addEventListener("click", function()
+{
+    location.reload();
+});
 
 
 function hideall()
@@ -67,7 +78,7 @@ function hideall()
 
 hideall();
 
-// function for showing pages
+// ===== Navigation Buttons ===== //
 function showart(artno)
 {
     hideall();
@@ -97,8 +108,6 @@ art3btn.addEventListener("click",
         showart(3);
     }
 );
-
-var chosenqns = [];
 
 // ===== Quiz Section {Article 2} ===== //
 function toggleQuiz()
@@ -130,7 +139,12 @@ function submitQuiz()
         }
     }
 
-    quizbody.innerHTML += "<p>You got: " + quizscore + " / 3!";
+    shadingDisplay.style.display = "grid";
+    quizbody.style.display = "none";
+
+    quizprompt.style.display = "none";
+
+    shadingDisplay.innerHTML += "<p>You got: " + quizscore + " / 3!";
 }
 
 quizbtn.addEventListener("click",
@@ -155,6 +169,8 @@ gamebtn.addEventListener("click",
     }
 );
 
+// ===== Game Functions {Minigame} ===== //
+
 function land()
 {
     setTimeout(function() {
@@ -166,6 +182,7 @@ function jump()
 {
     jumping = true;
     console.log("hop, step, jump");
+    jumpsfx.play();
     runner.style.animation = "jumping-man 600ms steps(6)";
     setTimeout(function()
     {
@@ -179,6 +196,7 @@ function slide()
 {
     sliding = true;
     console.log("seppi-ku");
+    slidesfx.play();
     runner.style.animation = "sliding-man 600ms steps(6)";
     setTimeout(function()
     {
@@ -204,24 +222,23 @@ document.addEventListener('keydown', function(kbEvt) {
     }
 });
 
-var chosenObs;
 var lastchosen;
 
 function spawnObs()
 {
-    var speed = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+    let speed = [1, 1, 1, 1, 1, 1, 1, 1, 1];
 
-    var posY = 0;
-    var chosenObs;
-    var obstype;
+    let posY = 0;
+    let chosenObs;
+    let obstype;
 
     let minRunnerPos = 12;
     let maxRunnerPos = 20;
 
     if (screenwidth < 800)
         {
-            var speed = [3, 3, 3, 3, 3, 3, 3, 3, 3];
-            let maxRunnerPos = 50;
+            speed = [3, 3, 3, 3, 3, 3, 3, 3, 3];
+            maxRunnerPos = 50;
         }
 
     chosenObs = (Math.floor(Math.random() * 8) + 1);
@@ -309,6 +326,7 @@ function spawnObs()
                     if (obstacles[chosenObs].id == "powerup")
                     {
                         console.log("I'm fired up!");
+                        powerupsfx.play();
                         speed[chosenObs] = 0;
                         obsX[chosenObs] = 100;
                         obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
@@ -318,6 +336,7 @@ function spawnObs()
                             runner.style.filter = "brightness(100%)";
                             poweredUp = false;
                             console.log("powered down!");
+                            powerdownsfx.play();
                         }, 7000);
                     }
                     else
@@ -327,7 +346,6 @@ function spawnObs()
 
                             if (sliding == true)
                             {
-                                console.log("is this thing working?????????")
                                 scoreUp(2);
                             }
                             else
@@ -346,7 +364,7 @@ function spawnObs()
                 else if (obsX[chosenObs] == 19)
                 {
                     scoreUp(1);
-                    scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>"
+                    scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>";
                 }
                 break;
             }
@@ -364,7 +382,7 @@ function spawnObs()
 function scoreUp(scoreinc)
 {
     score += scoreinc;
-    scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>"
+    scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>";
 }
 
 function startgame()
@@ -385,6 +403,7 @@ function startgame()
 function die()
 {
     isPlaying = false;
+    diesfx.play();
     runner.style.animation = "none";
     clearInterval(spikeinterval);
 
@@ -395,7 +414,7 @@ function die()
     }
 
     jumpbtn.style.display = "none";
-    slide.style.display = "none";
+    slidebtn.style.display = "none";
 
     scoreh2.innerHTML = "<h2>You died! Score: " + score + "<h2>";
 }
@@ -434,5 +453,4 @@ function showmenu()
 burgerbtn.addEventListener("click", function()
 {
     showmenu();
-    console.log("hello world");
 });
