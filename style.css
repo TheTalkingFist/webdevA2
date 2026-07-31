@@ -438,6 +438,10 @@ input {
         font-size: 1.5em;
     }
 
+    button {
+        font-size: 1em;
+    }
+
     #slidebtn, #jumpbtn {
         display: block;
     }
@@ -468,13 +472,43 @@ input {
         font-size: 20px;
     }
 
+    .text--img img {
+        width: 100%;
+    }
+
+    .text-img, .img-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .text-img p, .img-text p {
+        text-align: center;
+    }
+
+    .text-img img, .img-text img {
+        width: 25%;
+    }
+
+    .img-text p {
+        order: 1;
+    }
+
+    .img-text img {
+        order: 2;
+    }
+
     .text--3img {
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 20px;
         margin: auto;
 
         width: 90%;
+    }
+
+    .img-n-text {
+        width: 50%;
     }
 
     #article2 .text-img img{
@@ -491,7 +525,5 @@ input {
         opacity: 100%;
     }
 
-    .text--img img {
-        width: 100%;
-    }
+
 }
