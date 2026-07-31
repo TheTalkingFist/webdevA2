@@ -234,11 +234,13 @@ function spawnObs()
 
     let minRunnerPos = 12;
     let maxRunnerPos = 20;
+    let pointRunnerPos = 19;
 
     if (screenwidth < 800)
         {
             speed = [2, 2, 2, 2, 2, 2, 2, 2, 2];
             maxRunnerPos = 40;
+            pointRunnerPos = 39;
         }
 
     chosenObs = (Math.floor(Math.random() * 8) + 1);
@@ -293,7 +295,7 @@ function spawnObs()
                         clearInterval(movement);
                     }
                 }
-                else if (obsX[chosenObs] == 19)
+                else if (obsX[chosenObs] == pointRunnerPos)
                 {
                     scoreUp(1);
                 }
@@ -361,7 +363,7 @@ function spawnObs()
                         }
                     }
                 }
-                else if (obsX[chosenObs] == 19)
+                else if (obsX[chosenObs] == pointRunnerPos)
                 {
                     scoreUp(1);
                     scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>";
