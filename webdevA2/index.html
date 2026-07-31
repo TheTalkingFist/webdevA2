@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Mikhail's Pixel Art Compendium</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -124,12 +124,43 @@
             </div>
 
             <div id="quiz-body">
-                <fieldset id="quiz-fieldset">
+                <fieldset class="quiz-fieldset">
                     <legend>What shading type is this?</legend>
 
-                    <input type="radio" name="q1" value="Gradient"> Gradient
-                    <input type="radio" name="q1" value="Dithering"> Dithering
-                    <input type="radio" name="q1" value="Dithering Gradient"> Dithering Gradient
+                    <div id="shading1"></div>
+
+                    <div class="quiz-answers">
+                        <label><input type="radio" name="q1" value="Gradient"> Gradient</label>
+                        <label><input type="radio" name="q1" value="Dithering"> Dithering</label>
+                        <label><input type="radio" name="q1" value="Dithering Gradient"> Dithering Gradient</label>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="quiz-fieldset">
+                    <legend>What shading type is this?</legend>
+
+                    <div id="shading2"></div>
+
+                    <div class="quiz-answers">
+                        <label><input type="radio" name="q2" value="Gradient"> Gradient</label>
+                        <label><input type="radio" name="q2" value="Dithering"> Dithering</label>
+                        <label><input type="radio" name="q2" value="Dithering Gradient"> Dithering Gradient</label>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="quiz-fieldset">
+                    <legend>What shading type is this?</legend>
+
+                    <div id="shading3"></div>
+
+                    <div class="quiz-answers">
+                        <label><input type="radio" name="q3" value="Gradient"> Gradient</label>
+                        <label><input type="radio" name="q3" value="Dithering"> Dithering</label>
+                        <label><input type="radio" name="q3" value="Dithering Gradient"> Dithering Gradient</label>
+                    </div>
+
                 </fieldset>
 
                 <button id="submit">Submit</button>
@@ -181,22 +212,22 @@
         <section class="article" id="article4">
             <h2>Seppi-Ku!</h2>
 
-            <p>Press Spacebar to jump, and the Down arrow key to duck! Avoid the obstacles!</p>
+            <p>Press Spacebar to jump, and the Down arrow key to duck! Avoid the obstacles! Grab a yellow power-up to directly hit obstacles to gain more points!</p>
 
             <div id="game-window">
-                <div class="birds" id="bird1">
+                <div class="obstacles" id="bird1">
                 </div>
 
-                <div class="birds" id="bird2">
+                <div class="obstacles" id="bird2">
                 </div>
 
-                <div class="birds" id="bird3">
+                <div class="obstacles" id="bird3">
                 </div>
 
-                <div class="birds" id="bird4">
+                <div class="obstacles" id="bird4">
                 </div>
 
-                <div class="birds" id="powerup">
+                <div class="obstacles" id="powerup">
                 </div>
 
                 <div id="runner-container">
@@ -206,16 +237,16 @@
                 </div>
 
 
-                <div class="spikes" id="spike1">
+                <div class="obstacles" id="spike1">
                 </div>
 
-                <div class="spikes" id="spike2">
+                <div class="obstacles" id="spike2">
                 </div>
 
-                <div class="spikes" id="spike3">
+                <div class="obstacles" id="spike3">
                 </div>
 
-                <div class="spikes" id="spike4">
+                <div class="obstacles" id="spike4">
                 </div>
 
             </div>
@@ -227,6 +258,8 @@
                 <button id="slidebtn">Slide</button>
             </div>
 
+            <h2 id="score">Score: </h2>
+
         </section>
     </main>
 
@@ -236,6 +269,9 @@
         </p>
         <p>
             BGM: Synthwave Retro 80s by DELOSound on Pixabay
+        </p>
+        <p>
+            Font: VCR OSD Mono by Riciery Leal on dafont.com
         </p>
     </footer>
 

@@ -15,11 +15,11 @@ const articles = document.querySelectorAll(".article"); // all pages
 
 const shadingDisplay = document.querySelector("#article2 .text--3img");
 const quizbody = document.querySelector("#article2 #quiz-body");
-const quizform = document.querySelector("#quiz-fieldset");
+const quizform = document.querySelectorAll(".quiz-fieldset");
 const quizbtn = document.querySelector("#quiz-start");
-const quizopts = document.querySelectorAll("fieldset input");
 const submitbtn = document.querySelector("#submit");
 
+const scoreh2 = document.querySelector("#score");
 const gamebtn = document.querySelector("#gamebtn");
 const startbtn = document.querySelector("#startbtn");
 const runner = document.querySelector("#runner");
@@ -30,15 +30,14 @@ const slidebtn = document.querySelector("#slidebtn");
 var jumping = false;
 var sliding = false;
 
-const spikes = document.querySelectorAll(".spikes");
-const birds = document.querySelectorAll(".birds");
+const obstacles = document.querySelectorAll(".obstacles");
 
 var spikeinterval;
 
 var isPlaying = false;
 var poweredUp = false;
 
-var obsX = [ 100, 100, 100, 100 ];
+var obsX = [ 100, 100, 100, 100, 100, 100, 100, 100, 100 ];
 
 var score = 0;
 var quizqn;
@@ -94,49 +93,39 @@ art3btn.addEventListener("click",
     }
 );
 
+var chosenqns = [];
+
 // ===== Quiz Section {Article 2} ===== //
 function toggleQuiz()
 {
     shadingDisplay.style.display = "none";
     quizbody.style.display = "flex";
     quizbtn.style.display = "none";
-
-    quizqn = (Math.floor(Math.random() * 3) + 1);
-
-    quizform.innerHTML += '<div id="shading' + quizqn + '"></div>';
-
 }
 
-var answer; // question for quiz
+var answer = []; // question for quiz
+var quizscore = 0;
 
 function submitQuiz()
 {
-    var quizans;
-    switch(quizqn)
-    {
-        case 1:
-            quizans = "Gradient";
-            break;
 
-        case 2:
-            quizans = "Dithering";
-            break;
+    var quizans = ["Gradient", "Dithering", "Dithering Gradient"];
 
-        case 3:
-            quizans = "Dithering Gradient";
-            break;
-    }
-
-    answer = document.querySelector("input[name='q1']:checked").value;
+    answer[0] = document.querySelector("input[name='q1']:checked").value;
+    answer[1] = document.querySelector("input[name='q2']:checked").value;
+    answer[2] = document.querySelector("input[name='q3']:checked").value;
 
     console.log(`Answer = ${quizans}, Player Answer = ${answer}`);
-    if (answer == quizans)
+    for (let i = 0; i < quizform.length; i++)
     {
-        quizbody.innerHTML += "<p>Correct! Nice work.</p>";
+        console.log(answer[i] + quizans[i]);
+        if (answer[i] == quizans[i])
+        {
+            quizscore += 1;
+        }
     }
-    else {
-        quizbody.innerHTML += "<p>Wrong!</p>";
-    }
+
+    quizbody.innerHTML += "<p>You got: " + quizscore + " / 3!";
 }
 
 quizbtn.addEventListener("click",
@@ -195,113 +184,185 @@ function slide()
 }
 
 document.addEventListener('keydown', function(kbEvt) {
-    // if (kbEvt.code === 'Space' && sliding == false && jumping == false)
-    // {
-    //     jump();
-    // }
-
-    // if (kbEvt.code === 'ArrowDown' && sliding == false && jumping == false)
-    // {
-    //     slide();
-    // }
 
     if (sliding == false && jumping == false)
     {
-        if (kbEvt.code === 'Space')
+        if (kbEvt.code === 'KeyW')
         {
             jump();
         }
 
-        if (kbEvt.code === 'ArrowDown')
+        if (kbEvt.code === 'KeyS')
         {
             slide();
         }
     }
 });
 
-function spawnObs(obstype, obsno)
-{
-    var speed = [ 1, 1, 1, 1, 1 ];
-    var posY = 0;
+var chosenObs;
+var lastchosen;
 
-    console.log("obstype = " + obstype);
-    console.log("obsno = " + obsno);
+function spawnObs()
+{
+    var speed = [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ];
+    var posY = 0;
+    var chosenObs;
+    var obstype;
+
+    chosenObs = (Math.floor(Math.random() * 8) + 1);
+
+    while (chosenObs == lastchosen)
+    {
+        chosenObs = (Math.floor(Math.random() * 8) + 1);
+    }
+
+    lastchosen = chosenObs;
+
+    if (chosenObs < 5)
+    {
+        obstype = 1;
+    }
+    else if (chosenObs >= 5)
+    {
+        obstype = 0;
+    }
+
+    console.log("chosenObs = " + chosenObs);
+
 
     // Rian helped me with this, was previously using CSS animations to move projectiles.
     let movement = setInterval(function() {
         switch(obstype)
             {
             case 0:
-                posY = (obsno * 20) + 20;
-                spikes[obsno].style.bottom = posY + "px";
+                posY = ((chosenObs - 5) * 20) + 20;
+                obstacles[chosenObs].style.bottom = posY + "px";
 
-                obsX[obsno] -= speed[obsno];
-                spikes[obsno].style.left = obsX[obsno] + "%";
+                obsX[chosenObs] -= speed[chosenObs];
+                obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
 
-                if (obsX[obsno] < 0)
+                if (obsX[chosenObs] > 12 && obsX[chosenObs] < 20 && jumping == false)
                 {
-                    spikes[obsno].style.left = obsX[obsno] + "%";
+                    if (poweredUp == true)
+                    {
+                        if (sliding == true)
+                        {
+                            scoreUp(2);
+                        }
+                        else
+                        {
+                            scoreUp(1);
+                        }
+                    }
+                    else
+                    {
+                        die();
+                        console.log(obsX[chosenObs]);
+                        clearInterval(movement);
+                    }
+                }
+                else if (obsX[chosenObs] == 19)
+                {
+                    scoreUp(1);
                 }
 
-                if (obsX[obsno] > 12 && obsX[obsno] < 20 && jumping == false)
+                if (obsX[chosenObs] < -5)
                 {
-                    die();
-                    clearInterval(movement);
+                    speed[chosenObs] = 0;
+                    obsX[chosenObs] = 100;
+                    obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
                 }
-                else if (obsX[obsno])
 
                 break;
 
             case 1:
-                posY = (100 - (obsno * 20));
-                birds[obsno].style.top = posY + "px";
+                posY = (100 - (chosenObs * 20));
+                obstacles[chosenObs].style.top = posY + "px";
 
-                obsX[obsno] -= speed[obsno];
-                birds[obsno].style.left = obsX[obsno] + "%";
+                obsX[chosenObs] -= speed[chosenObs];
+                obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
 
-                if (obsX[obsno] < 0)
+                if (obsX[chosenObs] < -10)
                 {
-                    birds[obsno].style.left = obsX[obsno] + "%";
+                    speed[chosenObs] = 0;
+                    obsX[chosenObs] = 100;
+                    obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
                 }
 
-                if (obsX[obsno] > 12 && obsX[obsno] < 20 && sliding == false)
+                if (obsX[chosenObs] > 12 && obsX[chosenObs] < 20 && sliding == false)
                 {
-                    if (birds[obsno].id = "powerup")
+                    if (obstacles[chosenObs].id == "powerup")
                     {
                         console.log("I'm fired up!");
+                        speed[chosenObs] = 0;
+                        obsX[chosenObs] = 100;
+                        obstacles[chosenObs].style.left = obsX[chosenObs] + "%";
+                        poweredUp = true;
+                        runner.style.filter = "brightness(300%)"; // W3Schools, learnt filter in css
+                        setTimeout(function() {
+                            runner.style.filter = "brightness(100%)";
+                            poweredUp = false;
+                            console.log("powered down!");
+                        }, 7000);
                     }
-                    die();
-                    clearInterval(movement);
-                }
+                    else
+                    {
+                        if (poweredUp == true)
+                        {
 
+                            if (sliding == true)
+                            {
+                                console.log("is this thing working?????????")
+                                scoreUp(2);
+                            }
+                            else
+                            {
+                                scoreUp(1);
+                            }
+                        }
+                        else
+                        {
+                            die();
+                            console.log(obsX[chosenObs]);
+                            clearInterval(movement);
+                        }
+                    }
+                }
+                else if (obsX[chosenObs] == 19)
+                {
+                    scoreUp(1);
+                    scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>"
+                }
                 break;
             }
     }, 20);
 
-    if (obsX[obsno] < 0)
+    if (obsX[chosenObs] < 0)
     {
-        obsX[obsno] = 100;
-        speed[obsno] = 0;
         clearInterval(movement);
+        obsX[chosenObs] = 100;
+        speed[chosenObs] = 0;
     }
+    console.log(score);
+}
+
+function scoreUp(scoreinc)
+{
+    score += scoreinc;
+    scoreh2.innerHTML = "<h2 id='score'>Score: " + score + "<h2>"
 }
 
 function startgame()
 {
-    console.log(window.screen.width)
     startbtn.style.display = "none";
 
     isPlaying = true;
 
-    var i = 0;
-
     spikeinterval = setInterval(function() {
-        spawnObs(Math.floor(Math.random() * 2), i); // Deciding which obstacle to spawn
-        i++;
-        if (i == 4)
-        {
-            i = 0;
-        }
+
+        spawnObs();
+
+        // spawnObs(5);
     }, 1200);
 
 }
@@ -312,19 +373,13 @@ function die()
     runner.style.animation = "none";
     clearInterval(spikeinterval);
 
-    for (x = 0; x < birds.length; x++)
+    for (let x = 0; x < obstacles.length; x++)
     {
-        birds[x].style.display = "none";
+        obstacles[x].style.left = "100%";
+        obstacles[x].style.display = "none";
     }
 
-    for (x = 0; x < spikes.length; x++)
-    {
-        spikes[x].style.display = "none";
-    }
-
-    const gamewindow = document.querySelector("#game-window");
-
-    gamewindow.innerHTML += "<h2>You died!<h2>";
+    scoreh2.innerHTML = "<h2>You died! Score: " + score + "<h2>";
 }
 
 startbtn.addEventListener("click", function()
@@ -335,12 +390,12 @@ startbtn.addEventListener("click", function()
 jumpbtn.addEventListener("click", function()
 {
     jump();
-})
+});
 
 slidebtn.addEventListener("click", function()
 {
     slide();
-})
+});
 
 // ===== Responsive Web Design ===== //
 function showmenu()
