@@ -509,6 +509,7 @@ input {
 
     .img-n-text {
         width: 50%;
+        font-size: 1em;
     }
 
     #article2 .text-img img{
