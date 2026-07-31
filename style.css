@@ -255,19 +255,19 @@ button {
 
 /* ===== Quiz ===== */
 
-#shading1 {
+.shading1 {
 	background: url('images/shading-sheet.png') no-repeat -8px -8px;
 	width: 240px;
 	height: 240px;
 }
 
-#shading2 {
+.shading2 {
 	background: url('images/shading-sheet.png') no-repeat -520px -8px;
 	width: 240px;
 	height: 240px;
 }
 
-#shading3 {
+.shading3 {
 	background: url('images/shading-sheet.png') no-repeat -264px -8px;
 	width: 240px;
 	height: 240px;
