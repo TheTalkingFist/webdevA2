@@ -462,6 +462,10 @@ input {
         padding: 7px;
     }
 
+    footer button {
+        width: 50%;
+    }
+
     /* Navigation */
 
     #burgerbtn {

@@ -36,7 +36,7 @@ var spikeinterval;
 var isPlaying = false;
 var poweredUp = false;
 
-var obsX = [ 100, 100, 100, 100, 100, 100, 100, 100, 100 ];
+var obsX = [100, 100, 100, 100, 100, 100, 100, 100, 100];
 
 var score = 0;
 
@@ -237,8 +237,8 @@ function spawnObs()
 
     if (screenwidth < 800)
         {
-            speed = [3, 3, 3, 3, 3, 3, 3, 3, 3];
-            maxRunnerPos = 50;
+            speed = [2, 2, 2, 2, 2, 2, 2, 2, 2];
+            maxRunnerPos = 40;
         }
 
     chosenObs = (Math.floor(Math.random() * 8) + 1);
