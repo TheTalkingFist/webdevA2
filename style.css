@@ -518,6 +518,7 @@ input {
 
     .img-n-text p {
         opacity: 100%;
+        font-size: 1em;
 
         transition: none;
     }
